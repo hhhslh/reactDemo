@@ -1,26 +1,20 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+// import React from 'react'
+// const Component = React.Component
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+    render() {
+        return ( 
+            // JSX
+            <ul className="myList">
+                <li>{false?'React':'REACT'}</li>
+                <li>slh</li>
+            </ul>
+        )
+        // var child1 = React.createElement('li',null,'React')
+        // var child2 = React.createElement('li',null,'slh')
+        // var root = React.createElement('ul',{className:'myList'},child2,child1)
+    }
 }
 
-export default App;
+export default App
