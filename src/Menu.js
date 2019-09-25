@@ -1,6 +1,9 @@
 import React, {Component,Fragment} from 'react'
+import axios from 'axios'
 import './menu.css'
 import Menuitem from './Menuitem'
+import Cartoon from './Cartoon'
+import { CSSTransition,TransitionGroup } from 'react-transition-group'
 
 class Menu extends Component{
     // 生命周期:在某一时刻可以自动执行的函数
@@ -9,34 +12,23 @@ class Menu extends Component{
         super(props)
         this.state={
             inputValue:'',
-            list:['锅包肉','溜肉段']
+            list:[]
         }
     }
-
-    componentWillMount(){
-        console.log('componentWillMount---组件将要挂载到页面的时刻')
-    }
+    // 加载完Dom之后执行
     componentDidMount(){
-        console.log('componentDidMount---组件挂载完成的时刻')
+        axios.get('https://www.easy-mock.com/mock/5d8b0f3a98fe8f6134b63cbe/ReactDemo01/menu')
+        .then((res)=>{
+            console.log('axios 获取数据成功'+JSON.stringify(res))
+            this.setState({
+                list:res.data.data
+            })
+        })
+        .catch((error)=>{
+            console.log('axios 获取信息失败：'+error)
+        })
     }
-    // 优化性能
-    shouldComponentUpdate(){
-        console.log('shouldComponentUpdate---组件更新之前')
-        return true
-        // false下面的内容不执行
-        // return false
-    }
-    componentWillUpdate(){
-        console.log('componentWillUpdate---shouldComponentUpdate之后执行')
-    }
-    componentDidUpdate(){
-        console.log('componentDidUpdate---组件更新之后')
-    }
-    // componentWillReceiveProps(){
-    //     console.log('componentWillReceiveProps')
-    // }
     render(){
-        console.log('render---组件挂载中')
         return(
             // flex
             <Fragment>
@@ -53,35 +45,46 @@ class Menu extends Component{
                     <button onClick={this.addList.bind(this)}>加菜</button>
                 </div>
                 <ul ref={ul=>{this.ul=ul}}>
-                    {
-                        this.state.list.map((item,index)=>{
-                            return (
-                                <Menuitem 
-                                    key={index+item}
-                                    content={item}
-                                    index={index}
-                                    // list={this.state.list}
-                                    deleteItem={this.deleteItem.bind(this)}
-                                />
+                    <TransitionGroup>
+                        {
+                            this.state.list.map((item,index)=>{
+                                return (
+                                    <CSSTransition
+                                        timeout={2000}
+                                        classNames='cartoon-text'
+                                        unmountOnExit
+                                        appear={true}
+                                        key={index+item}
+                                    >
+                                    
+                                        <Menuitem 
+                                            key={index+item}
+                                            content={item}
+                                            index={index}
+                                            // list={this.state.list}
+                                            deleteItem={this.deleteItem.bind(this)}
+                                        />
+                                    </CSSTransition>
 
-                                // {/*
-                                //     <li 
-                                //         key={index+item}
-                                //         onClick={this.deleteItem.bind(this,index)}
-                                //         dangerouslySetInnerHTML={{__html:item}}
-                                //     >
-                                //     </li>
+                                    // {/*
+                                    //     <li 
+                                    //         key={index+item}
+                                    //         onClick={this.deleteItem.bind(this,index)}
+                                    //         dangerouslySetInnerHTML={{__html:item}}
+                                    //     >
+                                    //     </li>
 
-                                // */}
-                                
-                            )
-                        })
-                    }
+                                    // */}
+                                    
+                                )
+                            })
+                        }
+                    </TransitionGroup>
                 </ul>
+                <Cartoon/>
             </Fragment>
         )
     }
-
     inputChange(){
         this.setState({
             // inputValue:e.target.value
@@ -99,7 +102,6 @@ class Menu extends Component{
         },()=>{
             console.log(this.ul.querySelectorAll("li").length)
         })
-        
     }
     // 删除列表项
     deleteItem(index){
@@ -115,3 +117,5 @@ class Menu extends Component{
 }
 
 export default Menu
+
+

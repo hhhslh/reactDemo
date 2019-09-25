@@ -1,1 +1,53 @@
-.inputBox{border:3px solid blue}
+.inputBox{
+    border:3px solid blue
+}
+/* 入场之前 */
+.cartoon-text-enter{
+    opacity: 0;
+}
+/* 入场-结束 */
+.cartoon-text-enter-active{
+    opacity: 1;
+    transition:opacity 2000ms;
+}
+/* 结束 */
+.cartoon-text-enter-done{
+    opacity: 1;
+}
+.cartoon-text-exit{
+    opacity: 1;
+}
+.cartoon-text-exit-active{
+    opacity: 0;
+    transition:opacity 2000ms;
+}
+.cartoon-text-exit-done{
+    opacity: 0;
+}
+
+
+/* .show{ */
+    /* opacity: 1;
+    transition:all 1.5s ease-in; */
+    /* animation:show-item 2s ease-in forwards; */
+/* } */
+/* .hide{ */
+    /* opacity: 0;
+    transition:all 1.5s ease-in; */
+    /* animation:hide-item 2s ease-in forwards; */
+/* } */
+
+/* @keyframes hide-item{
+    0%{
+        opacity:1;
+        color:yellow;
+    }
+    50%{
+        opacity:0.5;
+        color:red;
+    }
+    100%{
+        opacity: 0;
+        color:green;
+    }
+} */
